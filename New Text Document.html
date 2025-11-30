@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Losowe Złote Myśli z Kogel Mogel 1</title>
+  <style>
+    /* --- GLOBAL (Windows 12 Fluent Style) --- */
+    body {
+      font-family: 'Segoe UI Variable Display', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #e0f2fe;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    /* --- FROSTED GLASS CONTAINER --- */
+    .container {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 40px;
+      border-radius: 24px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      max-width: 650px;
+      width: 90%;
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .container:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    h1 {
+      color: #38bdf8; /* Windows 12 accent (cyan) */
+      margin-bottom: 25px;
+      font-weight: 600;
+      font-size: 2.4em;
+      letter-spacing: 0.5px;
+    }
+
+    /* --- QUOTE DISPLAY --- */
+    #quote-display {
+      font-size: 1.8em;
+      margin: 30px 0 15px 0;
+      font-style: italic;
+      font-weight: 400;
+      color: #f8fafc;
+      line-height: 1.5;
+      min-height: 70px;
+      transition: opacity 0.4s ease;
+    }
+
+    #character-display {
+      font-size: 1.2em;
+      color: #94a3b8;
+      font-weight: 600;
+      margin-bottom: 35px;
+    }
+
+    /* --- BUTTON (Windows 12 Accent Style) --- */
+    button {
+      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+      color: #0f172a;
+      border: none;
+      padding: 14px 28px;
+      font-size: 1.1em;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4);
+      transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #0ea5e9, #0284c7);
+      transform: scale(1.06);
+      box-shadow: 0 6px 16px rgba(56, 189, 248, 0.6);
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 600px) {
+      .container {
+        padding: 25px;
+        width: 95%;
+      }
+      h1 {
+        font-size: 1.9em;
+      }
+      #quote-display {
+        font-size: 1.4em;
+        min-height: 60px;
+      }
+      #character-display {
+        font-size: 1em;
+      }
+      button {
+        padding: 12px 22px;
+        font-size: 1em;
+      }
+    }
+
+    /* --- FOOTER --- */
+    .footer {
+      position: fixed;
+      bottom: 12px;
+      right: 12px;
+      color: #64748b;
+      font-size: 0.85em;
+      opacity: 0.85;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>💬 Losowe Złote Myśli z "Kogel Mogel"</h1>
+    <p id="quote-display">Kliknij przycisk, aby wylosować cytat...</p>
+    <p id="character-display"></p>
+    <button onclick="displayRandomQuote()">Wylosuj Nową Myśl</button>
+  </div>
+
+  <div class="footer">
+    Made by Gracjan
+  </div>
+
+  <script>
+    const kogelMogelQuotes = [
+      { quote: "Marian, tu jest jakby luksusowo.", character: "Barbara Wolańska" },
+      { quote: "Marian, no zrób coś. Zobacz, przecież on jest jakby bez spodni!", character: "Barbara Wolańska" },
+      { quote: "Inaczej pójdziesz do przedszkola i będą cię znowu przywiązywać do kaloryfera!", character: "Barbara Wolańska" },
+      { quote: "Piotruś jest już właściwie dorosły.", character: "Barbara Wolańska" },
+      { quote: "Moja decyzja jest jakby nieodwołalna.", character: "Docent Marian Wolański" },
+      { quote: "Mnie nie wypada. Zresztą ja z zasady nie bijam kobiet.", character: "Docent Marian Wolański" },
+      { quote: "Ach, te kobiety! Piórko, piórko, piórko...", character: "Docent Marian Wolański" },
+      { quote: "Jak mówię, to mówię, a jak mówię, to wiem.", character: "Zenon Solski (Ojciec Kasi)" },
+      { quote: "Mus jest żebyś ty za mąż szła! Ale gospodarka czuje mus!", character: "Zenon Solski (Ojciec Kasi)" },
+      { quote: "On ma i horyzont, i holzwagen, i jeszcze motor emzetę ma! O, co on ma!", character: "Maria Solska (Matka Kasi)" },
+      { quote: "Ty może i głupia nie jesteś, ale rozumu to ty nie masz za grosz!", character: "Maria Solska (Matka Kasi)" },
+      { quote: "Oj córciu, córciu już ty długo panienką nie będziesz!", character: "Maria Solska (Matka Kasi)" },
+      { quote: "Otóż stryjeczny wuj szwagra mego drugiego męża…", character: "Pani Wolańska (Babcia Piotrusia)" },
+      { quote: "Nie ma takiej możliwości, żeby było coś niemożliwe.", character: "Kasia Solska" },
+      { quote: "Mamo, ja nie chcę tej niani. Ona jest głupia!", character: "Piotruś Wolański" },
+      { quote: "Chcę do mamusi!", character: "Piotruś Wolański" }
+    ];
+
+    function displayRandomQuote() {
+      const randomIndex = Math.floor(Math.random() * kogelMogelQuotes.length);
+      const randomQuote = kogelMogelQuotes[randomIndex];
+      document.getElementById('quote-display').textContent = `„${randomQuote.quote}”`;
+      document.getElementById('character-display').textContent = `- ${randomQuote.character}`;
+    }
+
+    displayRandomQuote();
+  </script>
+
+</body>
+</html>
